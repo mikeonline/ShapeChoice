@@ -1,0 +1,57 @@
+﻿@page "/"
+@using Shapes
+
+<h1>Shape Area Calculator</h1>
+
+<div id="ShapeType">
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="radio" checked @onclick="SetSquare">Square
+      </label>
+    </div>
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="radio" @onclick="SetTriangle">Triangle
+      </label>
+    </div>
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="radio" @onclick="SetCircle">Circle
+      </label>
+    </div>
+</div>
+<div id="Dimensions">
+    <div class="form-group">
+      <label for="width">Width:</label>
+      <input type="number" class="form-control" id="width" @bind-value="@WidthInput">
+    </div>
+    <div class="form-group">
+      <label for="height">Height:</label>
+      <input type="number" class="form-control" id="height" @bind-value="@HeightInput">
+    </div>
+</div>
+<div id="Calculate">
+    <button type="button" class="btn btn-primary" @onclick="clickCalculate">Calculate Area</button>
+</div>
+<div>
+    <div>Calculated Area of shape:</div>
+    <input id="AreaValue" readonly value="@AreaValue">
+</div>
+
+@code{
+    protected IShape ThisShape { get; set; } = new Square();
+    protected int WidthInput { get; set; } = 1;
+    protected int HeightInput { get; set; } = 1;
+    protected string AreaValue { get; set; } = "";
+
+    private void SetSquare() => ThisShape = new Square();
+    private void SetTriangle() => ThisShape = new Triangle();
+    private void SetCircle() => ThisShape = new Circle();
+
+    private void clickCalculate() 
+    {
+        ThisShape.Width = WidthInput;
+        ThisShape.Height = HeightInput;
+        AreaValue = ThisShape.Area.ToString();
+    }
+}
